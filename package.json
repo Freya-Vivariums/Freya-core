@@ -1,0 +1,36 @@
+{
+  "name": "freya",
+  "version": "0.0.0",
+  "description": "Freya Vivarium Control System",
+  "author": "Sanne 'SpuQ' Santens",
+  "license": "GPL-3.0-only",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc && webpack --config webpack.config.js && rm -rf build/bundle.js jsbuild/  && cp -r src/public build/",
+    "deploy": "bash ./deploy.sh",
+    "dev": "nodemon --watch src src/index.ts",
+    "start": "node build/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpuQ/Freya.git"
+  },
+  "keywords": [
+    "freya",
+    "vivarium",
+    "control",
+    "system",
+    "raspberry",
+    "pi"
+  ],
+  "bugs": {
+    "url": "https://github.com/SpuQ/Freya/issues"
+  },
+  "homepage": "https://github.com/SpuQ/Freya#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  }
+}
