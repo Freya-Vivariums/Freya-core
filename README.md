@@ -2,7 +2,7 @@
 
 <img src="documentation/vivarium.png" align="right" width="40%"/>
 
-The Freya Vivarium Control System Core is a collection of controllers calculating actuator action based on settings and sensor inputs for creating a specific climate in an enclosed environment.
+The **Freya Vivarium Control System Core** is a collection of controllers calculating actuator action based on user-defined settings and sensor inputs for creating a specific climate in an enclosed environment.
 
 **Features:**
 - Temperature control
