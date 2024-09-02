@@ -19,6 +19,7 @@ The Freya Vivarium Control System core uses DBus for interaction with other appl
 | Object        | Method         | Argument                                | Returns      |
 |---------------|----------------|-----------------------------------------|--------------|
 | io.freya.Core | setMeasurement | {"variable":"temperature","value":21.4} |              |
+| io.freya.Core | setMeasurements| [{},{},{},...]                          |              |
 
 The actuator values are emitted by the DBus object.
 
