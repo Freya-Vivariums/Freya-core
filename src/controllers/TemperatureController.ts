@@ -12,7 +12,7 @@ export class TemperatureController extends EventEmitter {
 	private minimum:number;						// minimum and maximum temperature settings
 	private maximum:number;
 	private current:number;						// last value from sensor
-	private state:string;						// heating/cooling/idle (usted by the controller)
+	private state:string;						// heating/cooling/idle (used by the controller)
 	private status:any;							// status (for the rest of the system)
 	private noSensorMode:boolean = true; 		// presence of the sensor
 	private intervalTimer:any; 
@@ -20,12 +20,20 @@ export class TemperatureController extends EventEmitter {
 
 	constructor(){
 		super();
+		this.emit("heater", "off");			// Turn off the heater
+		this.emit("cooler", "off");			// Turn off the cooler
+		this.current = 0;
+		this.minimum = 0;
+		this.maximum = 0;
+		this.state = '';
+		this.setStatus( "error", "No controller", "No one is controlling the temperature now" );
 	}
 
 	clear(){
 		clearInterval(this.intervalTimer);	// destroy timer
 		this.emit("heater", "off");			// Turn off the heater
 		this.emit("cooler", "off");			// Turn off the cooler
+		this.current = 0;
 		this.minimum = 0;
 		this.maximum = 0;
 		this.state = '';
@@ -47,7 +55,7 @@ export class TemperatureController extends EventEmitter {
 		this.setStatus( "ok", "Controller set", "Controller set with min: "+this.minimum+"\xB0C and max: "+this.maximum+"\xB0C" );
 	}
 
-	noSensor( value ){
+	noSensor( value:boolean ){
 		this.noSensorMode = value;
 	}
 

@@ -47,6 +47,7 @@ module.exports.reloadCircadianSchedule = function(){
 
 /*
  *	Actuator controls
+ *	Variables from the controllers to the actuators
  */
 
 /* Lighting Controller Output */

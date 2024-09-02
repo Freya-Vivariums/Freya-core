@@ -25,6 +25,15 @@ export class  RainController extends EventEmitter{
 
 	constructor(){
 		super();
+		this.rainTimer = null;
+		this.setSprinklersOff(); 				// make sure the sprinklers are off
+		this.interval = 0;						// reset all variables
+		this.duration = 0;
+		this.minimum = 0;
+		this.maximum = 0;
+		this.current = 0;
+		this.setStatus( "error", "No Controller", "No one is controlling the humidity now" );
+
 		this.lastRainTime = Date.now();			// start rain when object is initialized
 	}
 

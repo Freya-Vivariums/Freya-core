@@ -92,9 +92,9 @@ export class CircadianSchedule extends EventEmitter {
 	}
 
 	// Load the Schedule settings from config file
-	loadSettingsFromFile( pathToFile ){
+	loadSettingsFromFile( pathToFile:string ){
 		try{
-			this.settings = JSON.parse(this.cleanString(fs.readFileSync( pathToFile, 'utf8')));
+			this.settings = JSON.parse(this.cleanString(fs.readFileSync( pathToFile, 'utf8').toString()));
 		} catch(err){
 			console.error("corrupt config file; exit");
 			this.setStatus( "error", "Load config", "Couldn't load settings from config file!");
@@ -105,7 +105,7 @@ export class CircadianSchedule extends EventEmitter {
 	// remove unwanted characters from a string
 	// (used for e.g. cleaning up the UTF-8 BOM from a file)
 	// TODO move this function to other file (utils.js?)
-	cleanString(input) {
+	cleanString(input:string) {
 		var output = "";
 		for (var i=0; i<input.length; i++) {
 			if (input.charCodeAt(i) <= 127) {
@@ -171,7 +171,7 @@ export class CircadianSchedule extends EventEmitter {
 
 	// lookup in which time of year (from settings) the given day/month belongs.
 	// returns the timeOfYear object, or 0 when nothing matched
-	lookupTimeOfYear( day, month){
+	lookupTimeOfYear( day:number, month:number){
 		for(var i = 0; i < this.settings.length; i++) {
      			var n = this.settings[i];
      			if( this.isWithinBounds( month, day, n.startMonth, n.startDay, n.endMonth, n.endDay) ){
@@ -182,7 +182,7 @@ export class CircadianSchedule extends EventEmitter {
 		return 0;
 	}
 
-	setTimeOfYear( timeOfYear ){
+	setTimeOfYear( timeOfYear:TimeOfYear ){
 		this.currentTimeOfYear = timeOfYear;
 		this.emit('newTimeOfYear', timeOfYear);
 		this.setStatus( "ok", "TimeOfYear", "season is set to "+timeOfYear.name);
@@ -190,7 +190,7 @@ export class CircadianSchedule extends EventEmitter {
 
 	// Checks whether a 'high' and 'low' value (e.g. month/day ) are within
 	// the given boundaries. Returns 1 if within bounds, and 0 when out of bounds.
-	isWithinBounds( high, low, startHigh, startLow, endHigh, endLow){
+	isWithinBounds( high:number, low:number, startHigh:number, startLow:number, endHigh:number, endLow:number){
 		if(
 			typeof( high ) == 'undefined' ||
 			typeof( low ) == 'undefined' ||

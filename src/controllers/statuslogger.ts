@@ -8,7 +8,7 @@
  import EventEmitter from 'events';  
  
  export class Statuslogger extends EventEmitter {
-    private statusArray:[any];          // array of log objects
+    private statusArray:[any]=[{}];          // array of log objects
     private logsize:number = 20;        // Log array maximum size
 
     constructor(){

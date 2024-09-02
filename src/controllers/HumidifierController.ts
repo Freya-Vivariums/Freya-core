@@ -22,6 +22,11 @@ export class  HumidifierController extends EventEmitter{
 	
 	constructor(){
 		super();
+		this.setHumidifierOff();				// make sure the humidifier is off
+		this.minimum = 0;						// reset all variables
+		this.maximum = 0;
+		this.current = 0;
+		this.setStatus( "error", "No Controller", "No one is controlling the humidity now" );
 	}
 
 	clear(){

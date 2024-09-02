@@ -19,6 +19,11 @@ export class LightingController extends EventEmitter {
 
 	constructor(){
 		super();
+		this.emit( "lights", "off" ); 	// Make sure the lights are off
+		this.minIntensity = 0;			// Reset variables
+		this.maxIntensity = 0;
+		this.state = null;
+		this.setStatus( "error", "No controller", "No one is controlling the lighing now" );
 	}
 
 	clear(){
