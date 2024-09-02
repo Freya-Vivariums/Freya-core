@@ -27,14 +27,26 @@ export class HardwareInterface extends EventEmitter {
     }
 
     setActuator( actuator:string, value:string ){
-
+        // ToDo: emit signal via D-Bus
     }
 
-    setMeasurement( measurement:string ){
+    // Update an individual measurement
+    private setMeasurement( measurement:string ){
         try{
             const data = JSON.parse(measurement);
-            console.log(data.variable+' set to: '+data.value);
             this.emit(data.variable, data.value);
+        } catch(e){
+            console.log('That did not work...')
+        }
+    }
+
+    // Update multiple measurements
+    private setMeasurements( measurements:string ){
+        try{
+            const data = JSON.parse(measurements);
+            data.forEach( (measurement:any) => {
+                this.emit(measurement.variable, measurement.value);
+            });
         } catch(e){
             console.log('That did not work...')
         }
@@ -63,6 +75,7 @@ export class HardwareInterface extends EventEmitter {
         // Create the service object
         const serviceObject = {
             setMeasurement: (arg:string)=>this.setMeasurement(arg),
+            setMeasurements: (arg:string)=>this.setMeasurements(arg),
             AnotherMethod: (arg:string)=>{
                 console.log("Another Method was called");
                 console.log(arg);
@@ -74,6 +87,7 @@ export class HardwareInterface extends EventEmitter {
             name: this.interfaceName,
             methods: {
                 setMeasurement:['s',''],
+                setMeasurements:['s',''],
                 AnotherMethod:['s','s']
             },
             signals: {}
