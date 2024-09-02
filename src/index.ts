@@ -9,19 +9,19 @@ import { TemperatureController } from './controllers/TemperatureController';
 import { LightingController } from './controllers/LightingController';
 import { RainController } from './controllers/RainController';
 import { HumidifierController } from './controllers/HumidifierController';
+import { HardwareInterface } from './interface';
 
 const configfile = __dirname+'/config/climatecore.conf';	// default config file
 
 // Controllers
-let circadianSchedule = new CircadianSchedule( configfile );
-let temperatureController = new TemperatureController();
-let lightingController = new LightingController();
-let rainController = new RainController();
-let humidifierController = new HumidifierController();
+const circadianSchedule = new CircadianSchedule( configfile );
+const temperatureController = new TemperatureController();
+const lightingController = new LightingController();
+const rainController = new RainController();
+const humidifierController = new HumidifierController();
 
-// Hardware
-var powerSwitch = new qdevice("FreyaPowerswitch_1");		// Freya's Powerswitch Module, on address 1
-var sensor = new qdevice("FreyaSensor_1");					// Freya's Sensor Module, on address 1
+// Hardware interface
+const hardware = new HardwareInterface();
 
 /* Circadian Schedule */
 circadianSchedule.on('newTimeOfYear', ( timeOfYear:TimeOfYear )=>{
@@ -45,14 +45,18 @@ module.exports.reloadCircadianSchedule = function(){
 	circadianSchedule.reload();
 }
 
+/*
+ *	Actuator controls
+ */
+
 /* Lighting Controller Output */
 lightingController.on("lights", ( data:any )=>{
-	powerSwitch.send('CH1', data);
+	hardware.setActuator('lights', data);
 });
 
 /* Rain Controller Output */
 rainController.on("sprinklers", ( data:any )=>{
-	powerSwitch.send('CH2', data);
+	hardware.setActuator('rain', data);
 });
 
 rainController.on("timeToNextRain", (data:any)=>{
@@ -62,45 +66,34 @@ rainController.on("timeToNextRain", (data:any)=>{
 
 /* Temperature Controller Output */
 temperatureController.on("heater", ( data:any )=>{
-	powerSwitch.send('CH3', data);
+	hardware.setActuator('heater', data)
 });
 
 temperatureController.on("cooler", ( data:any )=>{
-	powerSwitch.send('CH4', data);
+	hardware.setActuator('ventilation', data);
 });
 
-/* Sensor */
-function setSensorDisconnected(){
-	temperatureController.noSensor(true);
-	rainController.noSensor(true);
-	humidifierController.noSensor(true);
-	lightingController.noSensor(true);
-}
+humidifierController.on('humidifier', ( data:any)=>{
+	hardware.setActuator('humidifier', data);
+})
 
-function setSensorConnected(){
-	temperatureController.noSensor(false);
-	rainController.noSensor(false);
-	humidifierController.noSensor(false);
-	lightingController.noSensor(false);
-}
+/*
+ *	Environment measurements
+ *	Variables from the environment measured by sensors.
+ */
 
-sensor.on('disconnected', function(){
-	setSensorDisconnected();
+// TODO: watchdogs for sensor data
+
+hardware.on('temperature', (data:any)=>{
+	temperatureController.setCurrent( data );
 });
 
-sensor.on('connected', function(){
-	setSensorConnected();
+hardware.on('humidity', (data:any)=>{
+	rainController.setCurrent( data );			// Rain controller currently does nothing with this info...
+	humidifierController.setCurrent( data );
 });
 
-sensor.on('data', function( data:any ){
-	if( data.signal == "humidity" ){
-		rainController.setCurrent( data.argument );			// Rain controller currently does nothing with this info...
-		humidifierController.setCurrent( data.argument );
-	}
-	else if( data.signal == "lighting" ){
-		lightingController.setCurrent( data.argument );
-	}
-	else if (data.signal == "temperature" ){
-		temperatureController.setCurrent( data.argument );
-	}
+hardware.on('light', (data:any)=>{
+	lightingController.setCurrent( data );
 });
+
