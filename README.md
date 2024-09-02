@@ -1,4 +1,7 @@
 ![Edgeberry banner](documentation/Freya_banner.png)
+
+<img src="documentation/vivarium.png" align="right" width="40%"/>
+
 The Freya Vivarium Control System Core is a collection of controllers calculating actuator action based on settings and sensor inputs for creating a specific climate in an enclosed environment.
 
 **Features:**
@@ -6,6 +9,8 @@ The Freya Vivarium Control System Core is a collection of controllers calculatin
 - Humidifier control
 - Precipitation control
 - Lighting control
+
+<br clear="right"/>
 
 ## Usage
 Some useful usage text ...
