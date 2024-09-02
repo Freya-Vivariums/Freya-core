@@ -85,16 +85,19 @@ humidifierController.on('humidifier', ( data:any)=>{
 
 // TODO: watchdogs for sensor data
 
-hardware.on('temperature', (data:any)=>{
+hardware.on('temperature', (data:number)=>{
+	console.log('Temperature set to: '+data+'C');
 	temperatureController.setCurrent( data );
 });
 
-hardware.on('humidity', (data:any)=>{
+hardware.on('humidity', (data:number)=>{
+	console.log('Humidity set to: '+data+'%');
 	rainController.setCurrent( data );			// Rain controller currently does nothing with this info...
 	humidifierController.setCurrent( data );
 });
 
 hardware.on('light', (data:any)=>{
+	console.log('Light set to: '+data+'%');
 	lightingController.setCurrent( data );
 });
 

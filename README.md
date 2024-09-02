@@ -15,6 +15,10 @@ The **Freya Vivarium Control System Core** is a collection of controllers calcul
 ## Usage
 Some useful usage text ...
 
+| DBus object   | function       | argument                                | return value |
+|---------------|----------------|-----------------------------------------|--------------|
+| io.freya.Core | setMeasurement | {"variable":"temperature","value":21.4} | none         |
+
 
 ## License & Collaboration
 **Copyright© 2024 Sanne 'SpuQ' Santens**. This project is released under the **GNU GPLv3** license.
