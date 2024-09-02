@@ -12,12 +12,19 @@ The **Freya Vivarium Control System Core** is a collection of controllers calcul
 
 <br clear="right"/>
 
-## Usage
-Some useful usage text ...
+## API
+The Freya Vivarium Control System core uses DBus for interaction with other applications.
 
-| DBus object   | function       | argument                                | return value |
+
+| Object        | Method         | Argument                                | Returns      |
 |---------------|----------------|-----------------------------------------|--------------|
-| io.freya.Core | setMeasurement | {"variable":"temperature","value":21.4} | none         |
+| io.freya.Core | setMeasurement | {"variable":"temperature","value":21.4} |              |
+
+The actuator values are emitted by the DBus object.
+
+| Object        | Signal         | Argument                                |
+|---------------|----------------|-----------------------------------------|
+| io.freya.Core |                |                                         |
 
 
 ## License & Collaboration
