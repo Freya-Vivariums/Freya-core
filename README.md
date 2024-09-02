@@ -1,6 +1,12 @@
 ![Edgeberry banner](documentation/Freya_banner.png)
 The Freya Vivarium Control System is ...
 
+**Features:**
+- Temperature control
+- Humidifier control
+- Precipitation control
+- Lighting control
+
 ## Usage
 Some useful usage text ...
 
