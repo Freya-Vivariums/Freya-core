@@ -97,7 +97,7 @@ hardware.on('humidity', (data:number)=>{
 	humidifierController.setCurrent( data );
 });
 
-hardware.on('light', (data:number)=>{
+hardware.on('lighting', (data:number)=>{
 	console.log('Light set to: '+data+'%');
 	lightingController.setCurrent( data );
 });
