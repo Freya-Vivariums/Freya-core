@@ -31,7 +31,8 @@ jobs:
             mv ./build ./tempdir/;                 \
             mv ./climate.conf.js ./tempdir/;       \
             mv ./freya-core.conf ./tempdir/;       \
-            mv ./io.freya.Core.service ./tempdir/;
+            mv ./io.freya.Core.service ./tempdir/; \
+            mv ./uninstall.sh ./tempdir;
 
       - name: Create tarball
         run: tar -C ./tempdir -zcvf package.tar.gz .
