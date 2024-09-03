@@ -12,6 +12,14 @@ The **Freya Vivarium Control System Core** is Freya's central, hardware-independ
 
 <br clear="right"/>
 
+## Installation
+On your device, install the Freya Vivarium Control System software by downloading and executing the installation script
+```
+wget -O install.sh https://github.com/Freya-Vivariums/Freya-core/releases/latest/download/install.sh;
+chmod +x ./install.sh;
+sudo ./install.sh;
+```
+
 ## API
 The Freya Vivarium Control System core uses DBus for interaction with other applications.
 ### Sensors
