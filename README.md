@@ -19,7 +19,7 @@ The Freya Vivarium Control System core uses DBus for interaction with other appl
 | Object        | Method         | Argument                                | Returns      |
 |---------------|----------------|-----------------------------------------|--------------|
 | io.freya.Core | setMeasurement | {"variable":"temperature","value":21.4} |              |
-| io.freya.Core | setMeasurements| [{},{},{},...]                          |              |
+|               | setMeasurements| [{},{},{},...]                          |              |
 
 You can call a method from the commandline using:
 ```
@@ -30,7 +30,11 @@ The actuator values are emitted by the DBus object.
 
 | Object        | Signal         | Argument                                |
 |---------------|----------------|-----------------------------------------|
-| io.freya.Core |                |                                         |
+| io.freya.Core | heater         |                                         |
+|               | ventilation    |                                         |
+|               | humidifier     |                                         |
+|               | watering       |                                         |
+|               | lighting       |                                         |
 
 You can listen to the emitted signals from the commandline using:
 ```
