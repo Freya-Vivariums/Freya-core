@@ -101,3 +101,4 @@ hardware.on('light', (data:any)=>{
 	lightingController.setCurrent( data );
 });
 
+setInterval(()=>hardware.setActuator("Heater", "zeemeermin"),2000);

@@ -21,11 +21,21 @@ The Freya Vivarium Control System core uses DBus for interaction with other appl
 | io.freya.Core | setMeasurement | {"variable":"temperature","value":21.4} |              |
 | io.freya.Core | setMeasurements| [{},{},{},...]                          |              |
 
+You can call a method from the commandline using:
+```
+dbus-send --system --print-reply --type=method_call --dest=io.freya.Core /io/freya/Core io.freya.Core.setMeasurement string:'{"variable":"temperature","value":"21.3"}'
+```
+
 The actuator values are emitted by the DBus object.
 
 | Object        | Signal         | Argument                                |
 |---------------|----------------|-----------------------------------------|
 | io.freya.Core |                |                                         |
+
+You can listen to the emitted signals from the commandline using:
+```
+sudo dbus-monitor --system "type='signal',interface='io.freya.Core'"
+```
 
 
 ## License & Collaboration
