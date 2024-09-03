@@ -30,11 +30,7 @@ The actuator values are emitted by the DBus object.
 
 | Object        | Signal         | Argument                                |
 |---------------|----------------|-----------------------------------------|
-| io.freya.Core | heater         |                                         |
-|               | ventilation    |                                         |
-|               | humidifier     |                                         |
-|               | watering       |                                         |
-|               | lighting       |                                         |
+| io.freya.Core | updateActuator | {"actuator": , "value": [on/off]}       |
 
 You can listen to the emitted signals from the commandline using:
 ```
