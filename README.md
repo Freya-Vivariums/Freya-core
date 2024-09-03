@@ -14,7 +14,7 @@ The **Freya Vivarium Control System Core** is Freya's central, hardware-independ
 
 ## API
 The Freya Vivarium Control System core uses DBus for interaction with other applications.
-
+### Sensors
 
 | Object        | Method         | Argument                                | Returns      |
 |---------------|----------------|-----------------------------------------|--------------|
@@ -25,7 +25,7 @@ You can call a method from the commandline using:
 ```
 dbus-send --system --print-reply --type=method_call --dest=io.freya.Core /io/freya/Core io.freya.Core.setMeasurement string:'{"variable":"temperature","value":"21.3"}'
 ```
-
+### Actuators
 The actuator values are emitted by the DBus object.
 
 | Object        | Signal         | Argument                                |
