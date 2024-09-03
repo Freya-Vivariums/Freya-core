@@ -187,5 +187,7 @@ fi
 echo -e '\e[0;32mInstalling D-Bus policy... \e[m'
 mv -f /opt/${APPNAME}/${APPCOMP}/freya-core.conf /etc/dbus-1/system.d/
 
+# Start the service
+systemctl start io.freya.Core
 
 exit 0;
