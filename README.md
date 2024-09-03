@@ -39,7 +39,7 @@ sudo dbus-monitor --system "type='signal',interface='io.freya.Core'"
 
 
 ## License & Collaboration
-**Copyright© 2024 Sanne 'SpuQ' Santens**. This project is released under the **GNU GPLv3** license. However, trademark rules apply to the Freya™ brand.
+**Copyright© 2024 Sanne 'SpuQ' Santens**. This project is released under the [**GNU GPLv3**](https://www.gnu.org/licenses/gpl-3.0.en.html) license. However, trademark rules apply to the Freya™ brand.
 
 ### Collaboration
 
