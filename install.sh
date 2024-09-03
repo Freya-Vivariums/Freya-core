@@ -167,7 +167,7 @@ rm -rf repo.tar.gz
 
 # Install the Freya Core systemd service
 echo -e -n '\e[0;32mInstalling systemd service... \e[m'
-mv -f /opt/${APPNAME}/${APPCOMP}/io.edgeberry.core.service /etc/systemd/system/
+mv -f /opt/${APPNAME}/${APPCOMP}/io.freya.Core.service /etc/systemd/system/
 systemctl daemon-reload
 if [ $? -eq 0 ]; then
     echo -e "\e[0;32m[Success]\e[0m"
@@ -176,7 +176,7 @@ else
 fi
 # Enable the Freya Core service to run on boot
 echo -e -n '\e[0;32mEnabling service to run on boot... \e[m'
-systemctl enable io.freya.core
+systemctl enable io.freya.Core
 if [ $? -eq 0 ]; then
     echo -e "\e[0;32m[Success]\e[0m"
 else
@@ -185,7 +185,7 @@ fi
 
 # Move the dbus policy to the /etc/dbus-1/system.d directory
 echo -e '\e[0;32mInstalling D-Bus policy... \e[m'
-mv -f /opt/${APPNAME}/${APPCOMP}/edgeberry-core.conf /etc/dbus-1/system.d/
+mv -f /opt/${APPNAME}/${APPCOMP}/freya-core.conf /etc/dbus-1/system.d/
 
 
 exit 0;

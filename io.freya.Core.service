@@ -1,6 +1,6 @@
 [Unit]
 Description=Freya Core service
-Documentation=https://github.com/edgeberry
+Documentation=https://github.com/Freya-Vivariums
 After=network.target
 
 [Service]
