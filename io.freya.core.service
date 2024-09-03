@@ -1,0 +1,13 @@
+[Unit]
+Description=Freya Core service
+Documentation=https://github.com/edgeberry
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/Freya/Core/
+Type=simple
+ExecStart=/usr/bin/node /opt/Freya/Core/build/index.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

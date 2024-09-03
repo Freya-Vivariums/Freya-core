@@ -29,7 +29,9 @@ jobs:
             mkdir tempdir;                         \
             mv ./package.json ./tempdir/;          \
             mv ./build ./tempdir/;                 \
-            mv ./climate.conf.js ./tempdir/;
+            mv ./climate.conf.js ./tempdir/;       \
+            mv ./freya-core.conf ./tempdir/;       \
+            mv ./io.freya.core.service ./tempdir/;
 
       - name: Create tarball
         run: tar -C ./tempdir -zcvf package.tar.gz .
