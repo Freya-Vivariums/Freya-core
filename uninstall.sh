@@ -37,12 +37,16 @@ echo -n -e "\e[0mDeleting the $APPNAME software... \e[0m"
 rm -rf /opt/$APPNAME/$APPCOMP
 echo -e "\e[0;32m[Done] \e[0m";
 
+# Stop the systemd service
+systemctl stop io.freya.Core
+systemctl daemon-reload
+
 # Delete the D-Bus policy for Freya-core
 echo -n -e "\e[0mDeleting the $APPNAME D-Bus policy... \e[0m"
 rm  /etc/dbus-1/system.d/freya-core.conf
 echo -e "\e[0;32m[Done] \e[0m";
 
-# Delete systemd service file for Edgeberry
+# Delete systemd service file for Freya-core
 echo -n -e "\e[0mDeleting the $APPNAME systemd service... \e[0m"
 rm  /etc/systemd/system/io.freya.Core.service
 echo -e "\e[0;32m[Done] \e[0m";
