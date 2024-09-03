@@ -41,7 +41,7 @@ export class HardwareInterface extends EventEmitter {
         if(!this.systemBus) return;
 
         // ToDo: emit signal via D-Bus
-        this.serviceObject.emit("Actuator", JSON.stringify({actuator:actuator, value:value}));
+        this.serviceObject.emit("updateActuator", JSON.stringify({actuator:actuator, value:value}));
     }
 
     // Update an individual measurement
@@ -94,7 +94,7 @@ export class HardwareInterface extends EventEmitter {
                 AnotherMethod:['s','s']
             },
             signals: {
-                Actuator:['s']
+                updateActuator:['s']
             }
         });
     }
