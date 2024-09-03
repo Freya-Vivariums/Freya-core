@@ -94,7 +94,7 @@ export class CircadianSchedule extends EventEmitter {
 	// Load the Schedule settings from config file
 	loadSettingsFromFile( pathToFile:string ){
 		try{
-			this.settings = JSON.parse(this.cleanString(fs.readFileSync( pathToFile, 'utf8').toString()));
+			this.settings = JSON.parse(fs.readFileSync( pathToFile, 'utf8').toString());
 		} catch(err){
 			console.error("corrupt config file; exit");
 			this.setStatus( "error", "Load config", "Couldn't load settings from config file!");
@@ -102,30 +102,19 @@ export class CircadianSchedule extends EventEmitter {
 		this.setStatus( "ok", "Load config", "Settings are loaded from config file.");
 	}
 
-	// remove unwanted characters from a string
-	// (used for e.g. cleaning up the UTF-8 BOM from a file)
-	// TODO move this function to other file (utils.js?)
-	cleanString(input:string) {
-		var output = "";
-		for (var i=0; i<input.length; i++) {
-			if (input.charCodeAt(i) <= 127) {
-				output += input.charAt(i);
-			}
-		}
-		return output;
-	}
-
 	/*	TimeOfDay (hh:mm) related functions */
 
 	// check if the current time belongs in the current time of day,
 	// if not, set the new time of day.
 	checkTimeOfDay( hours:number, minutes:number ){
-		if(this.currentTimeOfDay === null ) return false;
-
-		var inBounds = this.isWithinBounds( hours, minutes, this.currentTimeOfDay.startHours, this.currentTimeOfDay.startMinutes, this.currentTimeOfDay.endHours, this.currentTimeOfDay.endMinutes);
+		//if(!this.currentTimeOfDay) return false;
+		let inBounds:number = 0;
+		if(this.currentTimeOfDay){
+			inBounds = this.isWithinBounds( hours, minutes, this.currentTimeOfDay.startHours, this.currentTimeOfDay.startMinutes, this.currentTimeOfDay.endHours, this.currentTimeOfDay.endMinutes);
+		}
 		if( inBounds  <= 0 ){	// If the time is 'out of bounds' or an error is returned
-			var newTimeOfDay = this.lookupTimeOfDay( hours, minutes);
-			if( newTimeOfDay !== null ){
+			let newTimeOfDay = this.lookupTimeOfDay( hours, minutes);
+			if( newTimeOfDay ){
 				this.setTimeOfDay( newTimeOfDay );
 			}
 		}
@@ -159,8 +148,13 @@ export class CircadianSchedule extends EventEmitter {
 	// check whether the current date belongs in the current time of year,
 	// if not, set the new time of year.
 	checkTimeOfYear( day:number, month:number ){
-		if(this.currentTimeOfYear === null ) return false;
-		if( !this.isWithinBounds( month, day, this.currentTimeOfYear.startMonth, this.currentTimeOfYear.startDay, this.currentTimeOfYear.endMonth, this.currentTimeOfYear.endDay ) ){
+
+		//if(!this.currentTimeOfYear) return false;
+		let isWithinBounds = 0
+		if( this.currentTimeOfYear ){
+			isWithinBounds = this.isWithinBounds( month, day, this.currentTimeOfYear.startMonth, this.currentTimeOfYear.startDay, this.currentTimeOfYear.endMonth, this.currentTimeOfYear.endDay );
+		}
+		if( !isWithinBounds ){
 			var newTimeOfYear = this.lookupTimeOfYear( day, month);
 			if( newTimeOfYear != 0 ){
 				this.setTimeOfYear( newTimeOfYear );
@@ -173,7 +167,7 @@ export class CircadianSchedule extends EventEmitter {
 	// returns the timeOfYear object, or 0 when nothing matched
 	lookupTimeOfYear( day:number, month:number){
 		for(var i = 0; i < this.settings.length; i++) {
-     			var n = this.settings[i];
+     			let n = this.settings[i];
      			if( this.isWithinBounds( month, day, n.startMonth, n.startDay, n.endMonth, n.endDay) ){
          			return n;
       			}
@@ -190,15 +184,8 @@ export class CircadianSchedule extends EventEmitter {
 
 	// Checks whether a 'high' and 'low' value (e.g. month/day ) are within
 	// the given boundaries. Returns 1 if within bounds, and 0 when out of bounds.
-	isWithinBounds( high:number, low:number, startHigh:number, startLow:number, endHigh:number, endLow:number){
-		if(
-			typeof( high ) == 'undefined' ||
-			typeof( low ) == 'undefined' ||
-			typeof( startHigh ) == 'undefined' ||
-			typeof( startLow ) == 'undefined' ||
-			typeof( endHigh ) == 'undefined' ||
-			typeof( endLow ) == 'undefined'
-		) return 0; // TODO return error instead of 'not within bounds'!
+	isWithinBounds( high:number, low:number, startHigh:number|null, startLow:number|null, endHigh:number|null, endLow:number|null){
+		if( !high || !low || !startHigh || !startLow || !endHigh || !endLow ) return 0; // TODO return error instead of 'not within bounds'!
 
 		if( startHigh < endHigh ){
 			if( high > startHigh && high < endHigh ) return 1;		// high definitly within bounds

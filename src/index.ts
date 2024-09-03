@@ -11,7 +11,7 @@ import { RainController } from './controllers/RainController';
 import { HumidifierController } from './controllers/HumidifierController';
 import { HardwareInterface } from './interface';
 
-const configfile = __dirname+'/config/climatecore.conf';	// default config file
+const configfile = 'climate.conf.js';	// default config file
 
 // Controllers
 const circadianSchedule = new CircadianSchedule( configfile );
@@ -28,7 +28,8 @@ circadianSchedule.on('newTimeOfYear', ( timeOfYear:TimeOfYear )=>{
 	// TODO: pass to Dashboard
 });
 
-circadianSchedule.on('newTimeOfDay', ( timeOfDay:TimeOfDay )=>{	
+circadianSchedule.on('newTimeOfDay', ( timeOfDay:TimeOfDay )=>{
+	console.log('New TimeOfDay')	
 	lightingController.clear();			// Clearing the controllers (otherwise e.g. timers will keep on running)
 	temperatureController.clear();
 	rainController.clear();
@@ -96,9 +97,7 @@ hardware.on('humidity', (data:number)=>{
 	humidifierController.setCurrent( data );
 });
 
-hardware.on('light', (data:any)=>{
+hardware.on('light', (data:number)=>{
 	console.log('Light set to: '+data+'%');
 	lightingController.setCurrent( data );
 });
-
-setInterval(()=>hardware.setActuator("Heater", "zeemeermin"),2000);
