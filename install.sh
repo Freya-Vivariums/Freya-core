@@ -166,7 +166,7 @@ fi
 rm -rf repo.tar.gz
 
 # Install the Freya Core systemd service
-echo -e -n '\e[0;32mInstalling systemd service... \e[m'
+echo -e -n '\e[mInstalling systemd service \e[m'
 mv -f /opt/${APPNAME}/${APPCOMP}/io.freya.Core.service /etc/systemd/system/
 systemctl daemon-reload
 if [ $? -eq 0 ]; then
@@ -175,19 +175,68 @@ else
     echo -e "\e[0;33m[Failed]\e[0m";
 fi
 # Enable the Freya Core service to run on boot
-echo -e -n '\e[0;32mEnabling service to run on boot... \e[m'
+echo -e -n '\e[mEnabling service to run on boot \e[m'
 systemctl enable io.freya.Core
 if [ $? -eq 0 ]; then
-    echo -e "\e[0;32m[Success]\e[0m"
+    echo -e "\e[m[Success]\e[0m"
 else
     echo -e "\e[0;33m[Failed]\e[0m";
 fi
 
 # Move the dbus policy to the /etc/dbus-1/system.d directory
-echo -e '\e[0;32mInstalling D-Bus policy... \e[m'
+echo -e -n '\e[mInstalling D-Bus policy \e[m'
 mv -f /opt/${APPNAME}/${APPCOMP}/freya-core.conf /etc/dbus-1/system.d/
+if [ $? -eq 0 ]; then
+    echo -e "\e[m[Success]\e[0m"
+else
+    echo -e "\e[0;33m[Failed]\e[0m";
+fi
 
 # Start the service
+echo -e -n '\e[mStarting the Freya Core service \e[m'
 systemctl start io.freya.Core
+if [ $? -eq 0 ]; then
+    echo -e "\e[m[Success]\e[0m"
+else
+    echo -e "\e[0;33m[Failed]\e[0m";
+fi
+
+
+##
+#   Hardware-software
+##
+
+# Function to install the legacy hardware
+install_legacy_hardware() {
+    echo "ToDo: Legacy installation..."
+}
+
+# Function to install the Edgeberry hardware
+install_edgeberry_hardware() {
+    echo "ToDo: Edgeberry hardware installation..."
+}
+
+
+# Options for hardware configurations
+select opt in "Legacy hardware" "Edgeberry hardware" "Custom" ; do
+    case $REPLY in
+        1)
+            install_legacy_hardware
+            break
+            ;;
+        2)
+            install_edgeberry_hardware
+            break
+            ;;
+        *)
+            break;
+            ;;
+    esac
+done
+
+
+##
+#   Finish installation
+##
 
 exit 0;
