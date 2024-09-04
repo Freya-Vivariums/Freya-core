@@ -33,6 +33,16 @@ jobs:
             mv ./freya-core.conf ./tempdir/;       \
             mv ./io.freya.Core.service ./tempdir/; \
             mv ./uninstall.sh ./tempdir;
+      
+      - name: Download latest UI release asset
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: gh release download --repo Freya-Vivariums/Freya-core-ui --pattern "Freya-core-ui.tar.gz"
+
+      - name: Unpack the UI in the public folder
+        run: |
+          rm ./tempdir/build/public/*                                        \
+          tar -xzf Edgeberry-dashboard-UI.tar.gz -C ./tempdir/build/public
 
       - name: Create tarball
         run: tar -C ./tempdir -zcvf package.tar.gz .
