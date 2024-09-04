@@ -41,7 +41,7 @@ jobs:
 
       - name: Unpack the UI in the public folder
         run: |
-          rm -r ./tempdir/build/public/*                                        \
+          rm -rf ./tempdir/build/public/*                                        \
           tar -xzf Edgeberry-dashboard-UI.tar.gz -C ./tempdir/build/public
 
       - name: Create tarball
