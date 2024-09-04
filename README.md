@@ -19,6 +19,14 @@ chmod +x ./install.sh;
 sudo ./install.sh;
 ```
 
+## Usage
+
+### System service
+The Freya Vivarium Control System Core software is installed as a `systemd` service, that is automatically started on boot. For manually starting, stopping and checking the status, use `systemctl`.
+```
+systemctl status io.freya.Core
+```
+
 ## API
 The Freya Vivarium Control System core uses DBus for interaction with other applications.
 ### Sensors
