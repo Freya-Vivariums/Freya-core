@@ -1,7 +1,5 @@
 ![Edgeberry banner](documentation/Freya_banner.png)
 
-<img src="documentation/vivarium.png" align="right" width="40%"/>
-
 The **Freya Vivarium Control System Core** is Freya's central, hardware-independent application for advanced climate simulation within a managed environment. It regulates various environmental variables (e.g. lighting, humidity, temperature, ...) according to user-defined settings. By processing sensor data received via its D-Bus interface, the system calculates and sends the necessary instructions to the actuators, also via the D-Bus interface, to maintain the desired conditions. The Core requires hardware-specific components that interface with the physical sensors and actuators.
 
 **Features:**
@@ -9,7 +7,6 @@ The **Freya Vivarium Control System Core** is Freya's central, hardware-independ
 - Humidifier control
 - Precipitation control
 - Lighting control
-<br clear="right"/>
 
 ## Installation
 On your device, install the Freya Vivarium Control System software by downloading and executing the installation script
@@ -50,7 +47,7 @@ The actuator values are emitted by the DBus object.
 
 You can listen to the emitted signals from the commandline using:
 ```
-sudo dbus-monitor --system "type='signal',interface='io.freya.Core'"
+dbus-monitor --system "type='signal',interface='io.freya.Core'"
 ```
 
 
