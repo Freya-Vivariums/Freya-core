@@ -40,7 +40,7 @@ jobs:
         run: gh release download --repo Freya-Vivariums/Freya-core-ui --pattern "Freya-core-ui.tar.gz"
 
       - name: Unpack the UI in the public folder
-        run: tar -xzf Edgeberry-dashboard-UI.tar.gz -C ./tempdir/build/public
+        run: tar -xzf Freya-core-ui.tar.gz -C ./tempdir/build/public
 
       - name: Create tarball
         run: tar -C ./tempdir -zcvf package.tar.gz .
