@@ -9,7 +9,6 @@ The **Freya Vivarium Control System Core** is Freya's central, hardware-independ
 - Humidifier control
 - Precipitation control
 - Lighting control
-
 <br clear="right"/>
 
 ## Installation
