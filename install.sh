@@ -239,4 +239,7 @@ done
 #   Finish installation
 ##
 
+# Remove this script
+rm -- "$0"
+
 exit 0;
