@@ -27,8 +27,9 @@ The Freya Vivarium Control System Core software is installed as a `systemd` serv
 systemctl status io.freya.Core
 ```
 
-## Application programming
-The Freya Vivarium Control System core uses DBus for interaction with other applications.
+## Application development
+The Freya Vivarium Control System Core uses DBus for interaction with other applications.
+
 ### Sensors
 
 | Object        | Method         | Argument                                | Returns      |
