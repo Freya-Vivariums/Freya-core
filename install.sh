@@ -40,6 +40,8 @@ echo -e "     =%%%%%%%+-%@%-@%+#%%%%#                  Vivarium Control System "
 echo -e "       %%%%%%%%* #@#=#=#%%#                                           "
 echo -e "         %%%%%%%%%=-:::-:                                             "
 echo -e "            #%%%%%%%%%*                                               "
+echo -e ""
+
 
 ##
 #   Install dependencies
