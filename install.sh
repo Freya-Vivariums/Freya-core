@@ -210,7 +210,9 @@ fi
 
 # Function to install the legacy hardware
 install_legacy_hardware() {
-    echo "ToDo: Legacy installation..."
+    wget -O installLegacyHardware.sh https://github.com/Freya-Vivariums/Freya-hardware-legacy/releases/latest/download/install.sh;
+    chmod +x ./installLegacyHardware.sh;
+    bash installLegacyHardware.sh;
 }
 
 # Function to install the Edgeberry hardware
