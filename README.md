@@ -23,6 +23,10 @@ The Freya Vivarium Control System Core software is installed as a `systemd` serv
 ```
 systemctl status io.freya.Core
 ```
+For monitoring the log file, use `journalctl`.
+```
+journalctl -f -u io.freya.Core
+```
 
 ## Application development
 The Freya Vivarium Control System Core uses DBus for interaction with other applications.
