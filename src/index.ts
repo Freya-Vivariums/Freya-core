@@ -36,7 +36,7 @@ const configfile = 'climate.conf.js';	// default climate config file
 
 /* Express Web/API server */
 const app = express();
-const port = 3000;				// default webui port: 3000
+const port = 8080;				// default webui port: 3000
 // Express tools
 app.use(express.json());        // JSON API
 app.use(cors({origin:'*'}));    // Cross-origin references
