@@ -53,7 +53,14 @@ sshpass -p ${PASSWORD} ssh -o StrictHostKeyChecking=no ${USER}@${HOST} "mkdir ~/
 
 # Copy the relevant project files to the device
 echo -e '\e[0;32mCopying project to device...\e[m'
-sshpass -p ${PASSWORD} scp -r ./src ./package.json ./tsconfig.json ./webpack.config.js ./freya-core.conf ./io.freya.Core.service ${USER}@${HOST}:temp/
+sshpass -p ${PASSWORD} scp -r   ./src \
+                                ./package.json \
+                                ./tsconfig.json \
+                                ./webpack.config.js \
+                                ./freya-core.conf \
+                                ./io.freya.Core.service \
+                                ./climate.conf.js \
+                                ${USER}@${HOST}:temp/
 
 # Install the application on remote device
 sshpass -p ${PASSWORD} ssh -o StrictHostKeyChecking=no ${USER}@${HOST} << EOF 
