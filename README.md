@@ -1,4 +1,4 @@
-![Edgeberry banner](documentation/Freya_banner.png)
+![Freya banner](https://raw.githubusercontent.com/Freya-Vivariums/.github/main/documentation/Freya_banner.png)
 
 The **Freya Vivarium Control System Core** is Freya's central, hardware-independent application for advanced climate simulation within a managed environment. It regulates various environmental variables (e.g. lighting, humidity, temperature, ...) according to user-defined settings. By processing sensor data received via its D-Bus interface, the system calculates and sends the necessary instructions to the actuators, also via the D-Bus interface, to maintain the desired conditions. The Core requires hardware-specific components that interface with the physical sensors and actuators.
 
