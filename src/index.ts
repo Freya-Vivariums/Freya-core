@@ -30,6 +30,7 @@ import { HumidifierController } from './controllers/HumidifierController';
 import { HardwareInterface } from './interface';
 // API routes
 import settingsApi from './api-routes/settings';
+import monitorApi from './api-routes/monitor';
 // Commandline Interface (for inter-process communication)
 
 const configfile = 'climate.conf.js';	// default climate config file
@@ -42,6 +43,7 @@ app.use(express.json());        // JSON API
 app.use(cors({origin:'*'}));    // Cross-origin references
 // Use the API Routers
 app.use('/api/settings', settingsApi );
+app.use('/api/monitor', monitorApi );
 // Serve the public directory and a static HTML index file
 app.use(express.static( __dirname+'/public/'));
 app.get('*', (req:any, res:any)=>{
