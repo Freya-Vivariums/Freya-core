@@ -33,7 +33,7 @@ import settingsApi from './api-routes/settings';
 import monitorApi from './api-routes/monitor';
 // Commandline Interface (for inter-process communication)
 
-const configfile = 'climate.conf.js';	// default climate config file
+export const configfile = 'climate.conf.js';	// default climate config file
 
 /* Express Web/API server */
 const app = express();
@@ -142,3 +142,23 @@ hardware.on('lighting', (data:number)=>{
 	console.log('Light set to: '+data+'%');
 	lightingController.setCurrent( data );
 });
+
+
+/*
+ *	Monitor: Gather data at
+ *	regular intervals
+ */
+export let temperatureMonitorData:any[] = [];
+export let humidityMonitorData:any[] = [];
+export let lightingMonitorData:any[] = [];
+
+setInterval(()=>{
+	temperatureMonitorData.push(temperatureController.getCurrent());
+	humidityMonitorData.push(humidifierController.getCurrent());
+	lightingMonitorData.push(lightingController.getCurrent());
+	// remove last data from array
+	if(temperatureMonitorData.length>24*60*60*2) temperatureMonitorData.shift();
+	if(humidityMonitorData.length>24*60*60*2) humidityMonitorData.shift();
+	if(lightingMonitorData.length>24*60*60*2) lightingMonitorData.shift();
+
+},30*1000);

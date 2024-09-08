@@ -44,6 +44,10 @@ export class TemperatureController extends EventEmitter {
 		this.current = value;
 	}
 
+	getCurrent(){
+		return {min:this.minimum, max:this.maximum, value:this.current, time:Math.floor(new Date().getTime() / 1000)};
+	}
+
 	set( minTemperature:number, maxTemperature:number ){
 		this.minimum = minTemperature;
 		this.maximum = maxTemperature;

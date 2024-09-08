@@ -9,8 +9,8 @@ import EventEmitter from 'events';
 import {Statuslogger} from "./statuslogger";
 
 export class LightingController extends EventEmitter {
-	private minIntensity:number = 0;			// Minimum relative lighting intensity
-	private maxIntensity:number = 0;			// Maximum relative lighting intensity
+	private minimum:number = 0;			// Minimum relative lighting intensity
+	private maximum:number = 0;			// Maximum relative lighting intensity
 	private state:string|null;					// Current output state (on/off)
 	private current:number = 0;					// Current relative lighting measurement
 	private noSensorMode:boolean = true;		// No sensor mode
@@ -20,8 +20,8 @@ export class LightingController extends EventEmitter {
 	constructor(){
 		super();
 		this.emit( "lights", "off" ); 	// Make sure the lights are off
-		this.minIntensity = 0;			// Reset variables
-		this.maxIntensity = 0;
+		this.minimum = 0;			// Reset variables
+		this.maximum = 0;
 		this.state = null;
 		this.setStatus( "error", "No controller", "No one is controlling the lighing now" );
 	}
@@ -29,23 +29,27 @@ export class LightingController extends EventEmitter {
 	clear(){
 		clearInterval( this.intervalTimer );
 		this.emit( "lights", "off" ); 	// Make sure the lights are off
-		this.minIntensity = 0;			// Reset variables
-		this.maxIntensity = 0;
+		this.minimum = 0;			// Reset variables
+		this.maximum = 0;
 		this.state = null;
 		this.setStatus( "error", "No controller", "No one is controlling the lighing now" );
 	}
 
 	set( minIntensity:number, maxIntensity:number ){
-		this.minIntensity = minIntensity;
-		this.maxIntensity = maxIntensity;
+		this.minimum = minIntensity;
+		this.maximum = maxIntensity;
 		this.intervalTimer = setInterval( () => {
 			this.regulator();
 		}, 2000 );
-		this.setStatus( "ok", "Controller set", "Controller set with min: "+this.minIntensity+"% and max: "+this.maxIntensity+"%" );
+		this.setStatus( "ok", "Controller set", "Controller set with min: "+this.minimum+"% and max: "+this.maximum+"%" );
 	}
 
 	setCurrent( value:number ){
 		this.current = value;
+	}
+
+	getCurrent(){
+		return {min:this.minimum, max:this.maximum, value:this.current, time:Math.floor(new Date().getTime() / 1000)};
 	}
 
 	noSensor( value:boolean ){
@@ -71,7 +75,7 @@ export class LightingController extends EventEmitter {
 	regulator(){
 		if( !this.noSensorMode ){
 			// TODO a mode that actually uses sensor data
-			if( this.maxIntensity > 50 ){
+			if( this.maximum > 50 ){
 				this.emit( "lights", "on" );
 				this.setStatus( "ok", "Lights ON" );
 			}
@@ -81,7 +85,7 @@ export class LightingController extends EventEmitter {
 			}
 		}
 		else{
-			if( this.maxIntensity > 50 ){
+			if( this.maximum > 50 ){
 				this.emit( "lights", "on" );
 				this.setStatus( "warning", "Lights ON", "No sensor modus!" );
 			}

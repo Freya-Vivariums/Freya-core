@@ -67,6 +67,9 @@ export class  HumidifierController extends EventEmitter{
 		this.current = value;
 	}
 
+	getCurrent(){
+		return {min:this.minimum, max:this.maximum, value:this.current, time:Math.floor(new Date().getTime() / 1000)};
+	}
 	// Set tank level (0 - 100%)
 	setTankLevel( tankLevel:number ){
 		this.tankLevel = tankLevel;
