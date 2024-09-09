@@ -31,6 +31,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "@types/nedb": "^1.8.16",
     "nodemon": "^3.1.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4",
@@ -38,8 +39,10 @@
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
+    "@types/mongoose": "^5.11.97",
     "cors": "^2.8.5",
     "dbus-native": "^0.4.0",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "nedb": "^1.8.0"
   }
 }

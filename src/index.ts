@@ -28,9 +28,11 @@ import { LightingController } from './controllers/LightingController';
 import { RainController } from './controllers/RainController';
 import { HumidifierController } from './controllers/HumidifierController';
 import { HardwareInterface } from './interface';
+import mongoose, {} from 'mongoose';
 // API routes
 import settingsApi from './api-routes/settings';
 import monitorApi from './api-routes/monitor';
+import { saveMeasurement } from './database/measurements';
 // Commandline Interface (for inter-process communication)
 
 export const configfile = 'climate.conf.js';	// default climate config file
@@ -148,17 +150,22 @@ hardware.on('lighting', (data:number)=>{
  *	Monitor: Gather data at
  *	regular intervals
  */
-export let temperatureMonitorData:any[] = [];
-export let humidityMonitorData:any[] = [];
-export let lightingMonitorData:any[] = [];
 
 setInterval(()=>{
-	temperatureMonitorData.push(temperatureController.getCurrent());
-	humidityMonitorData.push(humidifierController.getCurrent());
-	lightingMonitorData.push(lightingController.getCurrent());
-	// remove last data from array
-	if(temperatureMonitorData.length>24*60*60*2) temperatureMonitorData.shift();
-	if(humidityMonitorData.length>24*60*60*2) humidityMonitorData.shift();
-	if(lightingMonitorData.length>24*60*60*2) lightingMonitorData.shift();
-
+	// Get the values and store them in the database
+	const temperatureMeasurement = temperatureController.getCurrent();
+	saveMeasurement('temperature', temperatureMeasurement.min, temperatureMeasurement.max, temperatureMeasurement.value, temperatureMeasurement.time);
+	const humidityMeasurement = humidifierController.getCurrent();
+	saveMeasurement('humidity', humidityMeasurement.min, humidityMeasurement.max, humidityMeasurement.value, humidityMeasurement.time );
+	const lightingMeasurement = lightingController.getCurrent();
+	saveMeasurement('lighting', lightingMeasurement.min, lightingMeasurement.max, lightingMeasurement.value, lightingMeasurement.time );
 },30*1000);
+
+/*
+ *	Mongoose (MongoDB)
+ */
+
+// Connect to the local MongoDB database without authentication
+const databaseName = "FreyaCore";
+mongoose.connect('mongodb://127.0.0.1:27017/'+databaseName).then(()=>{console.log('success')}).catch((err)=>{console.log(err)});
+
