@@ -28,7 +28,6 @@ import { LightingController } from './controllers/LightingController';
 import { RainController } from './controllers/RainController';
 import { HumidifierController } from './controllers/HumidifierController';
 import { HardwareInterface } from './interface';
-import mongoose, {} from 'mongoose';
 // API routes
 import settingsApi from './api-routes/settings';
 import monitorApi from './api-routes/monitor';
@@ -160,12 +159,4 @@ setInterval(()=>{
 	const lightingMeasurement = lightingController.getCurrent();
 	saveMeasurement('lighting', lightingMeasurement.min, lightingMeasurement.max, lightingMeasurement.value, lightingMeasurement.time );
 },30*1000);
-
-/*
- *	Mongoose (MongoDB)
- */
-
-// Connect to the local MongoDB database without authentication
-const databaseName = "FreyaCore";
-mongoose.connect('mongodb://127.0.0.1:27017/'+databaseName).then(()=>{console.log('success')}).catch((err)=>{console.log(err)});
 
