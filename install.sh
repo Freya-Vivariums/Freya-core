@@ -217,19 +217,21 @@ install_legacy_hardware() {
 
 # Function to install the Edgeberry hardware
 install_edgeberry_hardware() {
-    echo "ToDo: Edgeberry hardware installation..."
+    wget -O install.sh https://github.com/Freya-Vivariums/Freya-hardware-Edgeberry/releases/latest/download/install.sh;
+    chmod +x ./install.sh;
+    sudo ./install.sh;
 }
 
 
 # Options for hardware configurations
-select opt in "Legacy hardware" "Edgeberry hardware" "Custom" ; do
+select opt in "Edgeberry hardware" "Legacy hardware" "Custom" ; do
     case $REPLY in
         1)
-            install_legacy_hardware
+            install_edgeberry_hardware
             break
             ;;
         2)
-            install_edgeberry_hardware
+            install_legacy_hardware
             break
             ;;
         *)
