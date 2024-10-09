@@ -18,6 +18,8 @@ export class TemperatureController extends EventEmitter {
 	private intervalTimer:any; 
 	private statuslogger = new Statuslogger();
 
+	private watchdogtimer:any;
+
 	constructor(){
 		super();
 		this.emit("heater", "off");			// Turn off the heater
@@ -26,11 +28,25 @@ export class TemperatureController extends EventEmitter {
 		this.minimum = 0;
 		this.maximum = 0;
 		this.state = '';
+		// Start the watchdog
+		this.resetWatchdog();
 		this.setStatus( "error", "No controller", "No one is controlling the temperature now" );
+	}
+
+	/* Watchdog */
+	resetWatchdog(){
+		if(this.watchdogtimer) clearTimeout(this.watchdogtimer);
+		this.noSensor(false);
+		// If the watchdog timer runs out, put the system in
+		// 'no sensor' mode.
+		setTimeout(()=>{
+			this.noSensor(true);
+		},3*60*1000);
 	}
 
 	clear(){
 		clearInterval(this.intervalTimer);	// destroy timer
+		clearTimeout(this.watchdogtimer);
 		this.emit("heater", "off");			// Turn off the heater
 		this.emit("cooler", "off");			// Turn off the cooler
 		this.current = 0;
@@ -42,6 +58,7 @@ export class TemperatureController extends EventEmitter {
 
 	setCurrent( value:number ){
 		this.current = value;
+		this.resetWatchdog();
 	}
 
 	getCurrent(){
