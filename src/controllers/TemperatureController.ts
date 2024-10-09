@@ -39,7 +39,7 @@ export class TemperatureController extends EventEmitter {
 		this.noSensor(false);
 		// If the watchdog timer runs out, put the system in
 		// 'no sensor' mode.
-		setTimeout(()=>{
+		this.watchdogtimer = setTimeout(()=>{
 			this.noSensor(true);
 		},3*60*1000);
 	}
