@@ -56,7 +56,7 @@ export function saveMeasurement(type: string, min: number, max: number, value: n
                         if (err) {
                             console.error('Error removing document:', err);
                         } else {
-                            console.log(`Oldest measurement of type "${type}" removed.`);
+                            //console.log(`Oldest measurement of type "${type}" removed.`);
                         }
                     });
                 }
@@ -69,7 +69,7 @@ export function saveMeasurement(type: string, min: number, max: number, value: n
             if (err) {
                 console.error('Error inserting measurement:', err);
             } else {
-                console.log('Measurement inserted:', newDoc);
+                //console.log('Measurement inserted:', newDoc);
             }
         });
     });
