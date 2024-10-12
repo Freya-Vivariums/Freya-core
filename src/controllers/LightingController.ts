@@ -16,6 +16,7 @@ export class LightingController extends EventEmitter {
 	private noSensorMode:boolean = true;		// No sensor mode
 	private intervalTimer:any;					
 	private statuslogger = new Statuslogger();
+	private relativeMoment:number|null=null;
 
 	constructor(){
 		super();
@@ -42,6 +43,10 @@ export class LightingController extends EventEmitter {
 			this.regulator();
 		}, 2000 );
 		this.setStatus( "ok", "Controller set", "Controller set with min: "+this.minimum+"% and max: "+this.maximum+"%" );
+	}
+
+	setRelativeMoment( relativeMoment:number ){
+		this.relativeMoment = relativeMoment;
 	}
 
 	setCurrent( value:number ){
@@ -73,7 +78,7 @@ export class LightingController extends EventEmitter {
 
 	// core function
 	regulator(){
-		if( !this.noSensorMode ){
+		/*if( !this.noSensorMode ){
 			// TODO a mode that actually uses sensor data
 			if( this.maximum > 50 ){
 				this.emit( "lights", "on" );
@@ -92,6 +97,36 @@ export class LightingController extends EventEmitter {
 			else{
 				this.emit( "lights", "off" );
 				this.setStatus( "warning", "Lights OFF", "No sensor modus!" );
+			}
+		}*/
+
+		// Transitional lighting
+		if( this.relativeMoment && (this.relativeMoment <= 5 || this.relativeMoment >= 95 ) ){
+			this.emit( "translights", "on" );
+		}
+		else{
+			this.emit( "translights", "off" );
+
+			if( !this.noSensorMode ){
+				// TODO a mode that actually uses sensor data
+				if( this.maximum > 50 ){
+					this.emit( "lights", "on" );
+					this.setStatus( "ok", "Lights ON" );
+				}
+				else{
+					this.emit( "lights", "off" );
+					this.setStatus( "ok", "Lights OFF" );
+				}
+			}
+			else{
+				if( this.maximum > 50 ){
+					this.emit( "lights", "on" );
+					this.setStatus( "warning", "Lights ON", "No sensor modus!" );
+				}
+				else{
+					this.emit( "lights", "off" );
+					this.setStatus( "warning", "Lights OFF", "No sensor modus!" );
+				}
 			}
 		}
 	}

@@ -88,6 +88,10 @@ module.exports.reloadCircadianSchedule = function(){
 	circadianSchedule.reload();
 }
 
+circadianSchedule.on('relativeMoment', ( relativeMoment )=>{
+	lightingController.setRelativeMoment( relativeMoment );
+})
+
 /*
  *	Actuator controls
  *	Variables from the controllers to the actuators
@@ -97,6 +101,12 @@ module.exports.reloadCircadianSchedule = function(){
 lightingController.on("lights", ( data:any )=>{
 	hardware.setActuator('lights', data);
 });
+
+
+lightingController.on("translights", ( data:any )=>{
+	hardware.setActuator('translights', data);
+});
+
 
 /* Rain Controller Output */
 rainController.on("sprinklers", ( data:any )=>{

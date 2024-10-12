@@ -266,7 +266,7 @@ export class CircadianSchedule extends EventEmitter {
 		const passedMinutes = minutes + hours*60;
 
 		const relativeMoment = parseFloat( ((passedMinutes/totalMinutes)*100).toFixed(1) );
-		//console.log(relativeMoment+"%");
+		console.log(relativeMoment+"%");
 		this.emit('relativeMoment',relativeMoment);
 	}
 }
