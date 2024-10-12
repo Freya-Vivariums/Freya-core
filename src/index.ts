@@ -56,11 +56,11 @@ app.listen( port, ()=>{ console.log('\x1b[32mFreya Core UI server running on por
 
 
 // Controllers
-const circadianSchedule = new CircadianSchedule( configfile );
-const temperatureController = new TemperatureController();
-const lightingController = new LightingController();
-const rainController = new RainController();
-const humidifierController = new HumidifierController();
+export const circadianSchedule = new CircadianSchedule( configfile );
+export const temperatureController = new TemperatureController();
+export const lightingController = new LightingController();
+export const rainController = new RainController();
+export const humidifierController = new HumidifierController();
 
 // Hardware interface
 const hardware = new HardwareInterface();

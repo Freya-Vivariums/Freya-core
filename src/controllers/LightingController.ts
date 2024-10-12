@@ -71,6 +71,24 @@ export class LightingController extends EventEmitter {
 		this.emit("status", status);
 		this.statuslogger.log( status );	// write to log
 	}
+	
+	getStatus(){
+		const logs:any[] = this.statuslogger.readLogs();
+
+		if (logs.length === 0) return null;
+	  
+		let latestLog: any | null = null;
+	  
+		for (const log of logs) {
+		  if (log.timestamp !== undefined) {
+			if (!latestLog || log.timestamp > (latestLog.timestamp || 0)) {
+			  latestLog = log;
+			}
+		  }
+		}
+	  
+		return latestLog;
+	  }
 
 	readLog(){
 		return this.statuslogger.readLogs();

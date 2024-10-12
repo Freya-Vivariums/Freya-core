@@ -92,6 +92,24 @@ export class TemperatureController extends EventEmitter {
 		//console.log(JSON.stringify(status));	// for debugging
 	}
 
+	getStatus(){
+		const logs:any[] = this.statuslogger.readLogs();
+
+		if (logs.length === 0) return null;
+	  
+		let latestLog: any | null = null;
+	  
+		for (const log of logs) {
+		  if (log.timestamp !== undefined) {
+			if (!latestLog || log.timestamp > (latestLog.timestamp || 0)) {
+			  latestLog = log;
+			}
+		  }
+		}
+	  
+		return latestLog;
+	  }
+
 	readLog(){
 		return this.statuslogger.readLogs();
 	}
