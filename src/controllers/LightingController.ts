@@ -78,56 +78,31 @@ export class LightingController extends EventEmitter {
 
 	// core function
 	regulator(){
-		/*if( !this.noSensorMode ){
-			// TODO a mode that actually uses sensor data
-			if( this.maximum > 50 ){
+		// Day
+		if( this.maximum > 50 ){
+			// Transitional lighting in the early day and
+			// the late evening
+			if( this.relativeMoment && (this.relativeMoment <= 7 || this.relativeMoment >= 93 ) ){
+				if( this.maximum > 50 ){
+					this.emit( "translights", "on" );
+				}
+				else{
+					this.emit( "translights", "off" );
+				}
+				this.emit( "lights", "off" );
+			}
+			// Main lighting during the day
+			else{
 				this.emit( "lights", "on" );
 				this.setStatus( "ok", "Lights ON" );
-			}
-			else{
-				this.emit( "lights", "off" );
-				this.setStatus( "ok", "Lights OFF" );
+				this.emit( "translights", "off" );
 			}
 		}
+		// Night
 		else{
-			if( this.maximum > 50 ){
-				this.emit( "lights", "on" );
-				this.setStatus( "warning", "Lights ON", "No sensor modus!" );
-			}
-			else{
-				this.emit( "lights", "off" );
-				this.setStatus( "warning", "Lights OFF", "No sensor modus!" );
-			}
-		}*/
-
-		// Transitional lighting
-		if( this.relativeMoment && (this.relativeMoment <= 5 || this.relativeMoment >= 95 ) ){
-			this.emit( "translights", "on" );
-		}
-		else{
+			this.emit( "lights", "off" );
 			this.emit( "translights", "off" );
-
-			if( !this.noSensorMode ){
-				// TODO a mode that actually uses sensor data
-				if( this.maximum > 50 ){
-					this.emit( "lights", "on" );
-					this.setStatus( "ok", "Lights ON" );
-				}
-				else{
-					this.emit( "lights", "off" );
-					this.setStatus( "ok", "Lights OFF" );
-				}
-			}
-			else{
-				if( this.maximum > 50 ){
-					this.emit( "lights", "on" );
-					this.setStatus( "warning", "Lights ON", "No sensor modus!" );
-				}
-				else{
-					this.emit( "lights", "off" );
-					this.setStatus( "warning", "Lights OFF", "No sensor modus!" );
-				}
-			}
+			this.setStatus( "ok", "Lights OFF" );
 		}
 	}
 }
