@@ -220,53 +220,53 @@ export class CircadianSchedule extends EventEmitter {
 	/*
 	 *	Relative moment
 	 */
-	private calculateRelativeMoment( nowHours:number, nowMinutes:number ){
-		if(!this.currentTimeOfDay) return;
-
-		let hours:number;
-		let minutes:number;
-
+	 private calculateRelativeMoment(nowHours: number, nowMinutes: number) {
+		if (!this.currentTimeOfDay) return;
+	
+		let hours: number;
+		let minutes: number;
+	
 		// Calculate the amount of hours this time-of-day has
-		if( this.currentTimeOfDay.endHours > this.currentTimeOfDay.startHours ){
+		if (this.currentTimeOfDay.endHours >= this.currentTimeOfDay.startHours) {
 			hours = this.currentTimeOfDay.endHours - this.currentTimeOfDay.startHours;
+		} else {
+			hours = (this.currentTimeOfDay.endHours + 24) - this.currentTimeOfDay.startHours;
 		}
-		else{
-			hours = this.currentTimeOfDay.startHours - this.currentTimeOfDay.endHours + 12;
-		}
-
+	
 		// Calculate the amount of minutes this time-of-day has
-		if( this.currentTimeOfDay.endMinutes >= this.currentTimeOfDay.startMinutes ){
+		if (this.currentTimeOfDay.endMinutes >= this.currentTimeOfDay.startMinutes) {
 			minutes = this.currentTimeOfDay.endMinutes - this.currentTimeOfDay.startMinutes;
-		}
-		else{
-			minutes = 60-(this.currentTimeOfDay.startMinutes - this.currentTimeOfDay.endMinutes);
+		} else {
+			minutes = 60 - (this.currentTimeOfDay.startMinutes - this.currentTimeOfDay.endMinutes);
 			hours--;
 		}
-
-		// Calculate the amount of minutes
-		const totalMinutes = minutes + hours*60;
-
-		// Calculate the amount of minutes since time-of-day start
-		if( nowHours > this.currentTimeOfDay.startHours ){
+	
+		// Calculate the total duration in minutes
+		const totalMinutes = minutes + hours * 60;
+	
+		// Calculate the amount of hours since time-of-day start
+		if (nowHours >= this.currentTimeOfDay.startHours) {
 			hours = nowHours - this.currentTimeOfDay.startHours;
+		} else {
+			hours = (nowHours + 24) - this.currentTimeOfDay.startHours;
 		}
-		else{
-			hours = this.currentTimeOfDay.startHours - nowHours + 12;
-		}
-		
-		// Calculate the amount of minutes this time-of-day has
-		if( nowMinutes >= this.currentTimeOfDay.startMinutes ){
+	
+		// Calculate the amount of minutes since time-of-day start
+		if (nowMinutes >= this.currentTimeOfDay.startMinutes) {
 			minutes = nowMinutes - this.currentTimeOfDay.startMinutes;
-		}
-		else{
-			minutes = 60-(this.currentTimeOfDay.startMinutes - nowMinutes);
+		} else {
+			minutes = 60 - (this.currentTimeOfDay.startMinutes - nowMinutes);
 			hours--;
 		}
-
-		const passedMinutes = minutes + hours*60;
-
-		const relativeMoment = parseFloat( ((passedMinutes/totalMinutes)*100).toFixed(1) );
-		console.log(relativeMoment+"%");
-		this.emit('relativeMoment',relativeMoment);
+	
+		// Calculate the passed minutes since the start of the time-of-day
+		const passedMinutes = minutes + hours * 60;
+	
+		// Calculate the relative moment as a percentage
+		const relativeMoment = parseFloat(
+			((passedMinutes / totalMinutes) * 100).toFixed(1)
+		);
+		console.log( relativeMoment+"%" );
+		this.emit('relativeMoment', relativeMoment);
 	}
 }
