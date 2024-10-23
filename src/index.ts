@@ -124,7 +124,7 @@ temperatureController.on("heater", ( data:any )=>{
 });
 
 temperatureController.on("cooler", ( data:any )=>{
-	hardware.setActuator('ventilation', data);
+	hardware.setActuator('cooler', data);
 });
 
 humidifierController.on('humidifier', ( data:any)=>{

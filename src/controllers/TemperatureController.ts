@@ -18,7 +18,7 @@ export class TemperatureController extends EventEmitter {
 	private intervalTimer:any; 
 	private statuslogger = new Statuslogger();
 
-	private watchdogtimer:any;
+	private watchdogtimer:any=null;	
 
 	constructor(){
 		super();
@@ -34,10 +34,10 @@ export class TemperatureController extends EventEmitter {
 	}
 
 	/* Watchdog */
-	resetWatchdog(){
+	private resetWatchdog(){
 		if(this.watchdogtimer) clearTimeout(this.watchdogtimer);
 		this.noSensor(false);
-		// If the watchdog timer runs out, put the system in
+		// If the watchdog timer runs out, put the controller in
 		// 'no sensor' mode.
 		this.watchdogtimer = setTimeout(()=>{
 			this.noSensor(true);
