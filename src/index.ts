@@ -32,6 +32,7 @@ import { HardwareInterface } from './interface';
 import settingsApi from './api-routes/settings';
 import monitorApi from './api-routes/monitor';
 import { saveMeasurement } from './database/measurements';
+import { EdgeberryInterface } from './edgeberry_interface';
 // Commandline Interface (for inter-process communication)
 
 export const configfile = 'climate.conf.js';	// default climate config file
@@ -53,7 +54,12 @@ app.get('*', (req:any, res:any)=>{
 // Start the webserver
 app.listen( port, ()=>{ console.log('\x1b[32mFreya Core UI server running on port '+port+'\x1b[30m')});
 
-
+// Edgeberry Core interface
+const edgeberry = new EdgeberryInterface();
+setTimeout(()=>{
+	edgeberry.setApplicationInfo("Freya","v2.4", "Freya Vivarium Control System");
+	edgeberry.updateStatus("ok","Supah dupah!");
+},500);
 
 // Controllers
 export const circadianSchedule = new CircadianSchedule( configfile );
